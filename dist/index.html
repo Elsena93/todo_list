@@ -4,10 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>To-Do List</title>
 </head>
 <body>
     <script src="main.js" defer></script>
-    <div>Hello World!</div>
+    <header>
+        <h1>My To-Do List</h1>
+    </header>
+    <form action="" id="project-form">
+        <h2>Add new Project</h2>
+        <label for="name">Project Name</label>
+        <input type="text" name="name" id="name" required>
+        <button>Add Project</button>
+    </form>
+    <form action="" id="task-form">
+        <h2>Add new Task</h2>
+        <label for="name">Task Name</label>
+        <input type="text" name="name" id="name" required>
+        <label for="description">Description</label>
+        <input type="text" name="description" id="description" required>
+        <label for="dueDate">Due Date</label>
+        <input type="date" name="dueDate" id="dueDate" required>
+        <label for="priority">Priority</label>
+        <select name="priority" id="priority">
+            <option value="lowest">lowest</option>
+            <option value="lower">lower</option>
+            <option value="low">low</option>
+            <option value="high">high</option>
+            <option value="highest">higher</option>
+        </select>
+        <label for="project">Project</label>
+        <input type="text" name="project" id="project">
+        <button>Add Task</button>
+    </form>
 </body>
 </html>
