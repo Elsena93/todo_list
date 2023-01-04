@@ -38,7 +38,7 @@ function storageManager() {
      */
     const readProject = (id) => {
         let store = JSON.parse(localStorage.getItem(id));
-        let a = projectFactory(store.name);
+        let obj = projectFactory(store.name);
         obj.id = id;
         return obj;
     }

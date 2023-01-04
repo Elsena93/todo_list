@@ -1,5 +1,5 @@
 import './style.css';
-import { storageManager } from './manager';
+import { storageManager, updateProjectOptions } from './manager';
 import { interFace } from './interface'; //Not called but necessary to make functiong
 import { taskFactory, projectFactory } from './factory';
 
@@ -27,6 +27,8 @@ function initialLoad() {
     storageManager.addItem(sampleTask1);
     storageManager.addItem(sampleTask2);
     storageManager.addItem(sampleTask3);
+
+    updateProjectOptions();
     
 }
 

@@ -8,8 +8,10 @@ function interfaceDOMConstructor() {
     const addTask = document.querySelector('#task-form button');
     addTask.addEventListener('click', taskFormHandling);
 
-    return {
+    const projectOptions = document.querySelector('#task-form #project');
 
+    return {
+        addProject, addTask, projectOptions
     }
 }
 /**
