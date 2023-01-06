@@ -1,8 +1,8 @@
 
 body {
     display: grid;
-    grid-template-rows: 0.5fr 1fr 2fr;
-    grid-template-areas: 'top' 'form1' 'form2';
+    grid-template-rows: 128px 1fr 128px 320px;
+    grid-template-areas: 'top' 'main' 'form1' 'form2';
     justify-content: center;
 
     box-sizing: border-box;
@@ -10,9 +10,27 @@ body {
     margin: 0;
 }
 
+h3 {
+    margin: 0;
+}
+
+
 header {
     grid-area: top;
     
+}
+
+main {
+    grid-area: main;
+}
+
+sub {
+    margin: 0;
+    padding: 0;
+}
+
+.project {
+    margin: 0;
 }
 
 #project-form {
