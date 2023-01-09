@@ -1,4 +1,4 @@
-import { taskFactory, projectFactory, taskElementFactory } from './factory'
+import { taskFactory, projectFactory, taskElementFactory, projectElementFactory } from './factory'
 import projectStorage from './storage'
 import interFace from './interface'
 
@@ -125,6 +125,7 @@ function updateProjectOptions () {
 
 export { projectFormHandling, taskFormHandling, updateProjectOptions }
 
+// Coordinator to show projects or tasks
 function updateDisplayFromForm (obj) {
   const container = interFace.displayContainer
   if (obj === 'project') {
@@ -135,7 +136,7 @@ function updateDisplayFromForm (obj) {
     }
   } else if (obj === 'task') {
     if (container.classList.contains('tasks-container')) {
-      renderTasks()
+      expandTasks()
     } else {
       // Left empty
     }
@@ -154,45 +155,76 @@ function renderProjects (e) {
 
   list.forEach(key => {
     const obj = storageManager.readItem(key)
+    const el = projectElementFactory(obj)
 
-    const project = document.createElement('div')
-    const title = document.createElement('h3')
-    title.innerText = obj.name
+    container.appendChild(el)
+  })
 
-    const sub = document.createElement('sub')
-    sub.innerText = 'Project'
+  // Add delete event listener
+  const deleteButtons = document.querySelectorAll('.project-el .delete')
+  deleteButtons.forEach(element => {
+    element.addEventListener('click', deleteProjectEl)
+  })
 
-    project.setAttribute('data-key', `${key}`)
-    project.classList.add('project')
-
-    project.appendChild(sub)
-    project.appendChild(title)
-
-    container.appendChild(project)
+  // Show all task
+  const showButtons = document.querySelectorAll('.project-el .expand')
+  showButtons.forEach(element => {
+    element.addEventListener('click', expandTasks)
   })
 }
+// Coordinator to render all tasks from project
+function expandTasks (e) {
+  if (e.target.classList.contains('tasks')) {
+    const list = storageManager.taskKeys()
+    renderTasks(list)
+  } else if (e.target.classList.contains('expand')) {
+    const list = storageManager.taskKeys()
+    const id = e.target.closest('.project-el').dataset.key
+    const filtered = filterTaskOfProject(list, id)
+    renderTasks(filtered)
+  }
+}
 
-function renderTasks (e) {
-  const list = storageManager.taskKeys()
-
+/**
+ * @description filter tasks array assosiacited with a project
+ * @param {Array} param1 List of all task keys
+ * @param {string} param2 id of project
+ */
+function filterTaskOfProject (param1, param2) {
+  const filtered = []
+  param1.forEach(key => {
+    const obj = storageManager.readItem(key)
+    console.log(obj.project)
+    const project = storageManager.readItem(param2)
+    console.log(project.name)
+    if (obj.project === storageManager.readItem(param2).name) {
+      filtered.push(obj.id)
+    }
+  })
+  return filtered
+}
+/**
+ * @param {Array} keys list of rendered keys
+ */
+function renderTasks (keys) {
   const container = interFace.displayContainer
   container.replaceChildren()
   container.classList = 'tasks-container'
 
-  list.forEach(key => {
+  keys.forEach(key => {
     const obj = storageManager.readItem(key)
     const el = taskElementFactory(obj)
 
     container.appendChild(el)
   })
 
+  // Add delete event listener
   const deleteButtons = document.querySelectorAll('.task-el .control .delete')
-  const clearButtons = document.querySelectorAll('.task-el .control .clear')
-
   deleteButtons.forEach(element => {
     element.addEventListener('click', deleteTaskEl)
   })
 
+  const clearButtons = document.querySelectorAll('.task-el .control .clear')
   clearButtons.forEach(element => {
     element.addEventListener('click', clearTask)
   })
@@ -203,11 +235,20 @@ function deleteTaskEl (e) {
   const container = interFace.displayContainer
   container.removeChild(parentEl)
 
-  storageManager.removeItem(e.target.dataset.key)
+  storageManager.removeItem(parentEl.dataset.key)
+}
+
+function deleteProjectEl (e) {
+  const parentEl = e.target.closest('.project-el')
+  const container = interFace.displayContainer
+  container.removeChild(parentEl)
+
+  storageManager.removeItem(parentEl.dataset.key)
+  updateProjectOptions()
 }
 
 function clearTask (e) {
   console.log(e.target)
 }
 
-export { renderProjects, renderTasks }
+export { renderProjects, expandTasks }

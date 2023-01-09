@@ -33,6 +33,12 @@ sub {
     margin: 0;
 }
 
+.project-el, .task-el {
+    border: 2px;
+    border-style: solid;
+    border-color: red;
+}
+
 #project-form {
     grid-area: form1;
 

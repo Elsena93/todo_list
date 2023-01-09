@@ -1,5 +1,6 @@
 import './style.css'
 import { storageManager, updateProjectOptions, renderProjects } from './manager'
+// eslint-disable-next-line no-unused-vars
 import { interFace } from './interface' // Not called but necessary to make functioning
 import { taskFactory, projectFactory } from './factory'
 

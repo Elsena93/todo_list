@@ -103,13 +103,12 @@ function projectFactory (name) {
 
 /**
  * @description turn Task Object into DOM element
- * @param {Task} task Task Object
+ * @param {Task} param1 Task Object
  */
-
-function taskElementFactory (task) {
+function taskElementFactory (param1) {
   const taskEl = document.createElement('div')
   taskEl.classList = 'task-el'
-  taskEl.setAttribute('data-key', `${task.id}`)
+  taskEl.setAttribute('data-key', `${param1.id}`)
   const taskTitleEl = document.createElement('h3')
   const taskDateEl = document.createElement('div')
   const taskDescEl = document.createElement('div')
@@ -119,15 +118,15 @@ function taskElementFactory (task) {
   const deleteButton = document.createElement('button')
   const clearButton = document.createElement('button')
 
-  taskTitleEl.innerText = task.title
-  taskDateEl.innerText = task.dueDate
-  taskDescEl.innerText = task.description
+  taskTitleEl.innerText = param1.title
+  taskDateEl.innerText = param1.dueDate
+  taskDescEl.innerText = param1.description
   deleteButton.innerText = 'Delete Task'
   deleteButton.classList = 'delete'
-  deleteButton.setAttribute('data-key', `${task.id}`)
+  deleteButton.setAttribute('data-key', `${param1.id}`)
   clearButton.innerText = 'UNCLEARED'
   clearButton.classList = 'clear'
-  clearButton.setAttribute('data-key', `${task.id}`)
+  clearButton.setAttribute('data-key', `${param1.id}`)
 
   taskControl.appendChild(deleteButton)
   taskControl.appendChild(clearButton)
@@ -139,4 +138,34 @@ function taskElementFactory (task) {
   return taskEl
 }
 
-export { taskFactory, projectFactory, taskElementFactory }
+/**
+ * @description turn Project Object into DOM element
+ * @param {Project} param1 Project Object
+ */
+function projectElementFactory (param1) {
+  const proEl = document.createElement('div')
+  proEl.classList = 'project-el'
+  proEl.setAttribute('data-key', `${param1.id}`)
+
+  const title = document.createElement('h3')
+  title.innerText = param1.name
+  const sub = document.createElement('sub')
+  sub.innerText = 'Project'
+
+  const showTask = document.createElement('button')
+  showTask.innerText = 'Show Tasks'
+  showTask.classList = 'expand'
+
+  const deleteButton = document.createElement('button')
+  deleteButton.innerText = 'Delete Project'
+  deleteButton.classList = 'delete'
+
+  proEl.appendChild(sub)
+  proEl.appendChild(title)
+  proEl.appendChild(showTask)
+  proEl.appendChild(deleteButton)
+
+  return proEl
+}
+
+export { taskFactory, projectFactory, taskElementFactory, projectElementFactory }

@@ -1,11 +1,11 @@
-import { projectFormHandling, taskFormHandling, renderProjects, renderTasks } from './manager'
+import { projectFormHandling, taskFormHandling, renderProjects, expandTasks } from './manager'
 
 function interfaceDOMConstructor () {
   const projectsButton = document.querySelector('.menu .projects')
   projectsButton.addEventListener('click', renderProjects)
 
   const tasksButton = document.querySelector('.menu .tasks')
-  tasksButton.addEventListener('click', renderTasks)
+  tasksButton.addEventListener('click', expandTasks)
 
   const displayContainer = document.querySelector('div.content')
 
